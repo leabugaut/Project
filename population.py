@@ -136,7 +136,7 @@ def graph_update_f(n):
 )
 
 def data_retrieval_bytd(n):
-    df = pd.read_csv('data.csv')
+    df = pd.read_csv('rapport.csv')
     df = df.loc[:, ['timestamp', 'bytd']]
     last_pop = df['bytd'].iloc[-1]
     return f'Nombre de naissances enregistrées depuis 1 an : {last_pop}'
@@ -148,7 +148,7 @@ def data_retrieval_bytd(n):
 )
 
 def data_retrieval_btoday(n):
-    df = pd.read_csv('data.csv')
+    df = pd.read_csv('rapport.csv')
     df = df.loc[:, ['timestamp', 'btoday']]
     last_pop = df['btoday'].iloc[-1]
     return f"Nombre de naissances aujourd'hui : {last_pop}"
@@ -161,7 +161,7 @@ def data_retrieval_btoday(n):
 )
 
 def data_retrieval_dytd(n):
-    df = pd.read_csv('data.csv')
+    df = pd.read_csv('rapport.csv')
     df = df.loc[:, ['timestamp', 'dytd']]
     last_pop = df['dytd'].iloc[-1]
     return f"Nombre de morts depuis l'année dernière : {last_pop}"
@@ -174,7 +174,7 @@ def data_retrieval_dytd(n):
 )
 
 def data_retrieval_dtoday(n):
-    df = pd.read_csv('data.csv')
+    df = pd.read_csv('rapport.csv')
     df = df.loc[:, ['timestamp', 'dtoday']]
     last_pop = df['dtoday'].iloc[-1]
     return f"Nombre de morts aujourd'hui : {last_pop}"
@@ -187,7 +187,7 @@ def data_retrieval_dtoday(n):
 )
 
 def data_retrieval_mytd(n):
-    df = pd.read_csv('data.csv')
+    df = pd.read_csv('rapport.csv')
     df = df.loc[:, ['timestamp', 'mytd']]
     last_pop = df['mytd'].iloc[-1]
     return f"Migrations depuis l'année dernière : {last_pop}"
@@ -200,7 +200,7 @@ def data_retrieval_mytd(n):
 )
 
 def data_retrieval_mtoday(n):
-    df = pd.read_csv('data.csv')
+    df = pd.read_csv('rapport.csv')
     df = df.loc[:, ['timestamp', 'mtoday']]
     last_pop = df['mtoday'].iloc[-1]
     return f"Migrations aujourd'hui : {last_pop}"
