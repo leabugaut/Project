@@ -35,6 +35,15 @@ app.layout = html.Div(children=[
     html.Div(id="data-update-f", style = {"color":"blue", 'font-weight': 'bold'}),
     dcc.Graph(id="graph-update-f"),
     
+    html.Br(),
+    html.Div(id="data-update-bytd", style = {"color":"blue", 'font-weight': 'bold'}),
+    html.Div(id="data-update-btoday", style = {"color":"blue", 'font-weight': 'bold'}),
+    html.Div(id="data-update-dytd", style = {"color":"blue", 'font-weight': 'bold'}),
+    html.Div(id="data-update-dtoday", style = {"color":"blue", 'font-weight': 'bold'}),
+    html.Div(id="data-update-mytd", style = {"color":"blue", 'font-weight': 'bold'}),
+    html.Div(id="data-update-mtoday", style = {"color":"blue", 'font-weight': 'bold'}),
+    html.Div(id="data-update-pgytd", style = {"color":"blue", 'font-weight': 'bold'}),
+    html.Div(id="data-update-pop-growth", style = {"color":"blue", 'font-weight': 'bold'}),
 
 
 
@@ -119,6 +128,87 @@ def graph_update_f(n):
     fig=px.line(df, x="timestamp", y="pop_f")
     fig.update_layout(template="ggplot2")
     return fig
+
+# Nombre de naissances depuis l'année dernière
+@app.callback(
+    dash.dependencies.Output("data-update-bytd", "children"),
+    dash.dependencies.Input("interval-component", "n_intervals")
+)
+
+def data_retrieval_bytd(n):
+    df = pd.read_csv('data.csv')
+    df = df.loc[:, ['timestamp', 'bytd']]
+    last_pop = df['bytd'].iloc[-1]
+    return f'Nombre de naissances enregistrées depuis 1 an : {last_pop}'
+
+# Nombre de naissances aujourd'hui
+@app.callback(
+    dash.dependencies.Output("data-update-btoday", "children"),
+    dash.dependencies.Input("interval-component", "n_intervals")
+)
+
+def data_retrieval_btoday(n):
+    df = pd.read_csv('data.csv')
+    df = df.loc[:, ['timestamp', 'btoday']]
+    last_pop = df['btoday'].iloc[-1]
+    return f"Nombre de naissances aujourd'hui : {last_pop}"
+
+# Nombre de morts depuis l'année dernière
+
+@app.callback(
+    dash.dependencies.Output("data-update-dytd", "children"),
+    dash.dependencies.Input("interval-component", "n_intervals")
+)
+
+def data_retrieval_dytd(n):
+    df = pd.read_csv('data.csv')
+    df = df.loc[:, ['timestamp', 'dytd']]
+    last_pop = df['dytd'].iloc[-1]
+    return f"Nombre de morts depuis l'année dernière : {last_pop}"
+
+# Nombre de morts aujourd'hui 
+
+@app.callback(
+    dash.dependencies.Output("data-update-dtoday", "children"),
+    dash.dependencies.Input("interval-component", "n_intervals")
+)
+
+def data_retrieval_dtoday(n):
+    df = pd.read_csv('data.csv')
+    df = df.loc[:, ['timestamp', 'dtoday']]
+    last_pop = df['dtoday'].iloc[-1]
+    return f"Nombre de morts aujourd'hui : {last_pop}"
+
+# Migration depuis l'année dernière
+
+@app.callback(
+    dash.dependencies.Output("data-update-mytd", "children"),
+    dash.dependencies.Input("interval-component", "n_intervals")
+)
+
+def data_retrieval_mytd(n):
+    df = pd.read_csv('data.csv')
+    df = df.loc[:, ['timestamp', 'mytd']]
+    last_pop = df['mytd'].iloc[-1]
+    return f"Migrations depuis l'année dernière : {last_pop}"
+
+# Migrations aujourd'hui 
+
+@app.callback(
+    dash.dependencies.Output("data-update-mtoday", "children"),
+    dash.dependencies.Input("interval-component", "n_intervals")
+)
+
+def data_retrieval_mtoday(n):
+    df = pd.read_csv('data.csv')
+    df = df.loc[:, ['timestamp', 'mtoday']]
+    last_pop = df['mtoday'].iloc[-1]
+    return f"Migrations aujourd'hui : {last_pop}"
+
+
+# Exécution du dashboard  
+if __name__ == '__main__':
+   app.run_server(host='0.0.0.0', port=8050, debug=True)
 
 
 # Exécution du dashboard  
