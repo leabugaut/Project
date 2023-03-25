@@ -25,6 +25,19 @@ app.layout = html.Div(children=[
     dcc.Graph(id="graph-update"),
 
 
+    html.Br(),
+    html.H3("Evolution de la population masculine en France en temps réel : ",  style = {"color":"blue"}),
+    html.Div(id="data-update-m", style = {"color":"blue", 'font-weight': 'bold'}),
+    dcc.Graph(id="graph-update-m"), 
+
+    html.Br(),
+    html.H4("Evolution de la population féminine en France en temps réel : ",  style = {"color":"blue"}),
+    html.Div(id="data-update-f", style = {"color":"blue", 'font-weight': 'bold'}),
+    dcc.Graph(id="graph-update-f"),
+    
+
+
+
 ], style={'backgroundColor': '#B0E0E6'})
 
 
@@ -53,6 +66,57 @@ def graph_update(n):
     df = df.loc[:, ['timestamp', 'pop']]
     df["timestamp"] = pd.to_datetime(df["timestamp"], unit="s")
     fig=px.line(df, x="timestamp", y="pop")
+    fig.update_layout(template="ggplot2")
+    return fig
+
+
+# Population masculine 
+@app.callback(
+    dash.dependencies.Output("data-update-m", "children"),
+    dash.dependencies.Input("interval-component", "n_intervals")
+)
+
+def data_retrieval_m(n):
+    df = pd.read_csv('data.csv')
+    df = df.loc[:, ['timestamp', 'pop_m']]
+    last_pop = df['pop_m'].iloc[-1]
+    return f'Dernière population masculine enregistrée : {last_pop}'
+
+@app.callback(
+    dash.dependencies.Output("graph-update-m", "figure"),
+    dash.dependencies.Input("interval-component", "n_intervals")
+)
+
+def graph_update_m(n):
+    df = pd.read_csv('data.csv')
+    df = df.loc[:, ['timestamp', 'pop_m']]
+    df["timestamp"] = pd.to_datetime(df["timestamp"], unit="s")
+    fig=px.line(df, x="timestamp", y="pop_m")
+    fig.update_layout(template="ggplot2")
+    return fig
+
+# Population féminine 
+@app.callback(
+    dash.dependencies.Output("data-update-f", "children"),
+    dash.dependencies.Input("interval-component", "n_intervals")
+)
+
+def data_retrieval_f(n):
+    df = pd.read_csv('data.csv')
+    df = df.loc[:, ['timestamp', 'pop_f']]
+    last_pop = df['pop_f'].iloc[-1]
+    return f'Dernière population féminine enregistrée : {last_pop}'
+
+@app.callback(
+    dash.dependencies.Output("graph-update-f", "figure"),
+    dash.dependencies.Input("interval-component", "n_intervals")
+)
+
+def graph_update_f(n):
+    df = pd.read_csv('data.csv')
+    df = df.loc[:, ['timestamp', 'pop_f']]
+    df["timestamp"] = pd.to_datetime(df["timestamp"], unit="s")
+    fig=px.line(df, x="timestamp", y="pop_f")
     fig.update_layout(template="ggplot2")
     return fig
 
